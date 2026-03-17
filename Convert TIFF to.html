@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <!-- Méta-informations de base -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- SEO Primaire -->
+  <title>Convertisseur TIFF en PNG / JPEG par Lot | Gratuit & 100% Local</title>
+  <meta name="description"
+    content="Convertissez facilement vos fichiers et dossiers TIFF (.tif, .tiff) en PNG, JPEG ou WebP. Traitement par lot rapide, gratuit, et 100% local dans votre navigateur (aucun upload sur serveur).">
+  <meta name="keywords"
+    content="convertisseur tiff, tiff vers png, tiff en jpeg, convertir tiff par lot, convertisseur image local, tiff to webp, outil gratuit tiff">
+  <meta name="author" content="Outils Web Locaux">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://votre-domaine-ici.com/convertisseur-tiff">
+
+  <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+  <meta property="og:title" content="Convertisseur TIFF en PNG/JPEG par Lot - Rapide et Sécurisé">
+  <meta property="og:description"
+    content="Transformez tout un dossier d'images TIFF en formats Web instantanément. Traitement 100% privé sans envoi sur serveur.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://votre-domaine-ici.com/convertisseur-tiff">
+  <meta property="og:image" content="https://votre-domaine-ici.com/images/og-tiff-converter.jpg">
+  <!-- Remplacez par une vraie URL d'image -->
+  <meta property="og:site_name" content="Outils d'Images">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Convertisseur TIFF par Lot 100% Local">
+  <meta name="twitter:description"
+    content="Convertissez vos .tif en .png ou .jpg par lot directement dans votre navigateur. Confidentialité garantie.">
+  <meta name="twitter:image" content="https://votre-domaine-ici.com/images/twitter-tiff-converter.jpg">
+  <!-- Remplacez par une vraie URL d'image -->
+
+  <!-- Données Structurées JSON-LD (Pour Google Rich Snippets) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Convertisseur TIFF vers Formats Web par Lot",
+      "url": "https://votre-domaine-ici.com/convertisseur-tiff",
+      "description": "Une application web gratuite permettant de convertir des fichiers et dossiers TIFF (.tif) en formats web (PNG, JPEG, WebP) par lot, de manière 100% locale sans envoyer les fichiers sur un serveur.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "featureList": [
+        "Conversion TIFF vers PNG",
+        "Conversion TIFF vers JPEG",
+        "Traitement par lot",
+        "Exportation en ZIP",
+        "Traitement 100% local (Client-side)"
+      ]
+    }
+    </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- UTIF.js et JSZip -->
+  <script src="https://unpkg.com/utif@3.1.0/UTIF.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+    }
+
+    .drag-active {
+      border-color: #3b82f6 !important;
+      background-color: #eff6ff !important;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .checkerboard {
+      background-image:
+        linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
+        linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e2e8f0 75%),
+        linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-slate-800 flex flex-col items-center">
+
+  <!-- En-tête -->
+  <header class="w-full bg-white border-b border-slate-200 py-6 px-4 mb-8 shadow-sm">
+    <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
+      <div class="flex justify-center items-center gap-3 mb-3">
+        <i data-lucide="layers" class="w-10 h-10 text-blue-600" aria-hidden="true"></i>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Convertisseur TIFF par Lot</h1>
+      </div>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto">Transformez vos fichiers <strong
+          class="font-semibold text-slate-800">.tif</strong> et <strong
+          class="font-semibold text-slate-800">.tiff</strong> en formats web standards (PNG, JPEG, WebP) rapidement et
+        en toute sécurité.</p>
+    </div>
+  </header>
+
+  <!-- Contenu Principal -->
+  <main class="w-full max-w-3xl px-4 flex-grow flex flex-col items-center">
+
+    <!-- Application Web (L'outil) -->
+    <section aria-label="Outil de conversion TIFF"
+      class="w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 transition-all duration-300 mb-16">
+
+      <h2 class="sr-only">Interface de conversion</h2> <!-- Titre caché pour accessibilité et structure SEO -->
+
+      <!-- Zone de dépôt -->
+      <div id="dropzone"
+        class="p-8 border-2 border-dashed border-slate-300 bg-slate-50 flex flex-col items-center justify-center transition-colors duration-200 relative group">
+        <i data-lucide="folder-up" class="w-14 h-14 text-slate-400 mb-4 group-hover:text-blue-500 transition-colors"
+          aria-hidden="true"></i>
+        <h3 class="text-xl font-semibold text-slate-700 mb-2">Glissez-déposez vos fichiers ou dossiers TIFF ici</h3>
+        <p class="text-sm text-slate-500 mb-6">Traitement 100% local. Vos fichiers ne quittent jamais votre ordinateur.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4 z-10 relative">
+          <input type="file" id="fileInput" accept=".tif, .tiff" multiple class="hidden"
+            aria-label="Sélectionner des fichiers TIFF">
+          <input type="file" id="folderInput" webkitdirectory directory multiple class="hidden"
+            aria-label="Sélectionner un dossier contenant des TIFF">
+
+          <button onclick="document.getElementById('fileInput').click()"
+            class="bg-white border border-slate-300 hover:bg-slate-100 focus:ring-4 focus:ring-blue-100 text-slate-700 font-medium py-2.5 px-5 rounded-lg flex items-center gap-2 transition-all shadow-sm">
+            <i data-lucide="file-plus" class="w-4 h-4"></i> Sélectionner des fichiers
+          </button>
+          <button onclick="document.getElementById('folderInput').click()"
+            class="bg-white border border-slate-300 hover:bg-slate-100 focus:ring-4 focus:ring-blue-100 text-slate-700 font-medium py-2.5 px-5 rounded-lg flex items-center gap-2 transition-all shadow-sm">
+            <i data-lucide="folder-plus" class="w-4 h-4"></i> Sélectionner un dossier
+          </button>
+        </div>
+
+        <!-- Statut des fichiers -->
+        <div id="fileStatusContainer"
+          class="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-lg text-blue-800 flex items-center gap-3 hidden w-full max-w-md"
+          aria-live="polite">
+          <i data-lucide="files" class="w-6 h-6 text-blue-600"></i>
+          <div class="flex-1">
+            <p id="fileCountText" class="font-semibold text-sm">0 fichiers TIFF prêts</p>
+            <p id="rejectedCountText" class="text-xs text-blue-600/80 mt-1 hidden">Certains fichiers ignorés (non-TIFF)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options de conversion -->
+      <div id="optionsPanel"
+        class="p-6 bg-white opacity-50 pointer-events-none transition-opacity duration-300 border-t border-slate-100">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="formatSelect" class="block text-sm font-semibold text-slate-700 mb-2">Format de sortie
+              souhaité</label>
+            <select id="formatSelect"
+              class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm bg-white shadow-sm">
+              <option value="image/png">PNG (Sans perte, conserve la transparence)</option>
+              <option value="image/jpeg">JPEG (Fichier plus léger, pour photos)</option>
+              <option value="image/webp">WebP (Format web moderne, très léger)</option>
+            </select>
+          </div>
+
+          <div id="qualityContainer" class="opacity-50 pointer-events-none transition-opacity duration-200">
+            <label for="qualityRange" class="flex justify-between text-sm font-semibold text-slate-700 mb-2">
+              <span>Qualité de compression</span>
+              <span id="qualityValue" class="text-blue-600">90%</span>
+            </label>
+            <input type="range" id="qualityRange" min="0.1" max="1" step="0.1" value="0.9" aria-valuemin="10"
+              aria-valuemax="100" aria-valuenow="90"
+              class="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+          </div>
+        </div>
+
+        <!-- Progression -->
+        <div id="progressContainer" class="mt-6 hidden" aria-live="assertive">
+          <div class="flex justify-between text-sm font-medium text-slate-700 mb-2">
+            <span id="progressText">Traitement des images : 0 / 0</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden shadow-inner">
+            <div id="progressBar" class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"
+              role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+
+        <!-- Bouton d'action -->
+        <button id="convertBtn"
+          class="mt-8 w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all disabled:bg-slate-400 disabled:cursor-not-allowed shadow-md text-lg">
+          <i data-lucide="play" id="convertIcon" class="w-6 h-6"></i>
+          <span id="convertText">Démarrer la conversion</span>
+        </button>
+
+        <p id="errorMessage"
+          class="text-red-600 text-sm mt-4 hidden text-center font-medium bg-red-50 p-3 rounded-lg border border-red-100"
+          role="alert"></p>
+      </div>
+
+      <!-- Résultat -->
+      <div id="resultPanel" class="hidden border-t border-slate-100 bg-slate-50 p-6 flex-col items-center">
+        <div class="flex justify-between items-center w-full mb-4">
+          <h3 class="text-xl font-bold text-slate-800">Conversion terminée !</h3>
+          <span id="successCount"
+            class="text-sm font-bold text-emerald-700 bg-emerald-100 border border-emerald-200 px-4 py-1.5 rounded-full"></span>
+        </div>
+
+        <!-- Galerie d'aperçus -->
+        <div id="previewGrid"
+          class="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 max-h-72 overflow-y-auto p-3 bg-white border border-slate-200 rounded-xl shadow-inner mb-6">
+          <!-- Miniatures injectées via JS -->
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full">
+          <button id="resetBtn"
+            class="flex-1 bg-white border border-slate-300 hover:bg-slate-100 focus:ring-4 focus:ring-slate-100 text-slate-700 font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm">
+            <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+            Nouvelle conversion
+          </button>
+          <a id="downloadBtn" href="#"
+            class="flex-[2] bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-200 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md text-lg">
+            <i data-lucide="download" class="w-6 h-6"></i>
+            Télécharger tout (.zip)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contenu SEO (Très important pour le référencement) -->
+    <article class="w-full bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-12 text-slate-700 space-y-8">
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Pourquoi convertir des fichiers TIFF ?</h2>
+        <p class="mb-4 leading-relaxed">
+          Le format <strong>TIFF (Tagged Image File Format)</strong> est excellent pour la photographie professionnelle
+          et l'impression en raison de sa haute qualité sans perte. Cependant, il présente des inconvénients majeurs
+          pour le web :
+        </p>
+        <ul class="list-disc pl-6 space-y-2 mb-4 marker:text-blue-500">
+          <li><strong>Poids massif :</strong> Les fichiers TIFF sont souvent très lourds, ce qui ralentit
+            considérablement le chargement des pages web.</li>
+          <li><strong>Incompatibilité :</strong> La plupart des navigateurs web (Chrome, Safari, Firefox) ne peuvent pas
+            afficher les images TIFF directement.</li>
+        </ul>
+        <p class="leading-relaxed">
+          Notre <strong>convertisseur TIFF en ligne</strong> résout ce problème en transformant vos images brutes en
+          formats standards tels que le <strong class="text-slate-900">PNG</strong> (pour préserver la transparence), le
+          <strong class="text-slate-900">JPEG</strong> (idéal pour les photographies) ou le <strong
+            class="text-slate-900">WebP</strong> (le format moderne recommandé par Google pour un web rapide).
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Avantages de notre outil de conversion par lot</h2>
+        <div class="grid md:grid-cols-2 gap-6 mt-6">
+          <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="shield-check" class="w-6 h-6 text-emerald-600"></i>
+              <h3 class="font-bold text-lg text-slate-800">100% Sécurisé & Local</h3>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600">Contrairement à d'autres convertisseurs, <strong>vos
+                fichiers ne sont jamais envoyés sur un serveur</strong>. Toute la conversion se déroule grâce au
+              processeur de votre ordinateur, directement dans votre navigateur. Vos photos professionnelles ou
+              documents confidentiels restent privés.</p>
+          </div>
+          <div class="bg-slate-50 p-5 rounded-xl border border-slate-100">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="zap" class="w-6 h-6 text-amber-500"></i>
+              <h3 class="font-bold text-lg text-slate-800">Traitement par Lot (Batch)</h3>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600">Ne perdez plus de temps à convertir vos images une par
+              une. Sélectionnez un dossier complet contenant des dizaines de fichiers `.tif`, et laissez l'outil générer
+              une archive ZIP prête à être téléchargée.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Comment convertir un TIFF en JPG ou PNG ?</h2>
+        <ol class="list-decimal pl-6 space-y-3 marker:font-bold marker:text-blue-600">
+          <li><strong>Sélectionnez vos fichiers :</strong> Glissez-déposez vos fichiers TIFF ou un dossier complet dans
+            la zone pointillée ci-dessus.</li>
+          <li><strong>Choisissez le format web :</strong> Sélectionnez PNG (sans perte), JPEG (compressé) ou WebP
+            (optimisé) dans le menu déroulant.</li>
+          <li><strong>Ajustez la qualité :</strong> Si vous choisissez JPEG ou WebP, vous pouvez réduire la qualité pour
+            obtenir un fichier plus léger.</li>
+          <li><strong>Convertissez :</strong> Cliquez sur "Démarrer la conversion". Notre script JavaScript (UTIF.js)
+            décodera et réencodera les images instantanément.</li>
+          <li><strong>Téléchargez :</strong> Récupérez toutes vos images converties soigneusement rangées dans un
+            fichier ZIP.</li>
+        </ol>
+      </section>
+    </article>
+
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="w-full bg-slate-900 text-slate-400 py-8 text-center text-sm">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>&copy; 2024 Convertisseur TIFF - Outil gratuit fonctionnant côté client (Browser-side).</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a>
+        <a href="#" class="hover:text-white transition-colors">Conditions d'utilisation</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Logique JavaScript -->
+  <script>
+    // Initialiser les icônes après le chargement du DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+
+    // DOM Elements
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const folderInput = document.getElementById('folderInput');
+    const fileStatusContainer = document.getElementById('fileStatusContainer');
+    const fileCountText = document.getElementById('fileCountText');
+    const rejectedCountText = document.getElementById('rejectedCountText');
+
+    const optionsPanel = document.getElementById('optionsPanel');
+    const formatSelect = document.getElementById('formatSelect');
+    const qualityContainer = document.getElementById('qualityContainer');
+    const qualityRange = document.getElementById('qualityRange');
+    const qualityValue = document.getElementById('qualityValue');
+
+    const progressContainer = document.getElementById('progressContainer');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressBar = document.getElementById('progressBar');
+
+    const convertBtn = document.getElementById('convertBtn');
+    const convertIcon = document.getElementById('convertIcon');
+    const convertText = document.getElementById('convertText');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const resultPanel = document.getElementById('resultPanel');
+    const previewGrid = document.getElementById('previewGrid');
+    const successCount = document.getElementById('successCount');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let selectedFiles = [];
+    let zipArchive = null;
+
+    // --- Drag & Drop avec accessibilité visuelle ---
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, preventDefaults, false);
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, () => dropzone.classList.add('drag-active'), false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, () => dropzone.classList.remove('drag-active'), false);
+    });
+
+    dropzone.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files));
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+    folderInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    // --- Filtrage et Gestion ---
+    function handleFiles(filesList) {
+      errorMessage.classList.add('hidden');
+      resultPanel.classList.add('hidden');
+      previewGrid.innerHTML = '';
+
+      if (!filesList || filesList.length === 0) return;
+
+      const validExtensions = ['.tif', '.tiff'];
+      const newFiles = Array.from(filesList);
+
+      const tiffFiles = newFiles.filter(file => {
+        const name = file.name.toLowerCase();
+        return validExtensions.some(ext => name.endsWith(ext));
+      });
+
+      const rejectedCount = newFiles.length - tiffFiles.length;
+      selectedFiles = tiffFiles;
+
+      if (selectedFiles.length === 0) {
+        showError("Veuillez sélectionner au moins un fichier au format TIFF valide (.tif ou .tiff).");
+        resetUI();
+        return;
+      }
+
+      fileStatusContainer.classList.remove('hidden');
+      fileCountText.textContent = `${selectedFiles.length} fichier${selectedFiles.length > 1 ? 's' : ''} TIFF prêt${selectedFiles.length > 1 ? 's' : ''}`;
+
+      if (rejectedCount > 0) {
+        rejectedCountText.textContent = `${rejectedCount} fichier(s) ignoré(s) (format non supporté)`;
+        rejectedCountText.classList.remove('hidden');
+      } else {
+        rejectedCountText.classList.add('hidden');
+      }
+
+      optionsPanel.classList.remove('opacity-50', 'pointer-events-none');
+
+      // Focus pour l'accessibilité
+      formatSelect.focus();
+
+      fileInput.value = '';
+      folderInput.value = '';
+    }
+
+    formatSelect.addEventListener('change', (e) => {
+      if (e.target.value === 'image/png') {
+        qualityContainer.classList.add('opacity-50', 'pointer-events-none');
+        qualityRange.setAttribute('aria-disabled', 'true');
+      } else {
+        qualityContainer.classList.remove('opacity-50', 'pointer-events-none');
+        qualityRange.setAttribute('aria-disabled', 'false');
+      }
+    });
+
+    qualityRange.addEventListener('input', (e) => {
+      const val = Math.round(e.target.value * 100);
+      qualityValue.textContent = val + '%';
+      qualityRange.setAttribute('aria-valuenow', val);
+    });
+
+    function showError(msg) {
+      errorMessage.textContent = msg;
+      errorMessage.classList.remove('hidden');
+    }
+
+    function canvasToBlobAsync(canvas, format, quality) {
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => resolve(blob), format, quality);
+      });
+    }
+
+    // --- Conversion Principale ---
+    convertBtn.addEventListener('click', async () => {
+      if (selectedFiles.length === 0 || typeof UTIF === 'undefined') {
+        if (typeof UTIF === 'undefined') showError("Le script de décodage est en cours de chargement. Veuillez patienter un instant.");
+        return;
+      }
+
+      setProcessingState(true);
+      progressContainer.classList.remove('hidden');
+      previewGrid.innerHTML = '';
+
+      zipArchive = new JSZip();
+      const targetFormat = formatSelect.value;
+      const ext = targetFormat.split('/')[1];
+      const targetQuality = parseFloat(qualityRange.value);
+
+      let successCountNum = 0;
+      let errorsCount = 0;
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        const percent = Math.round((i / selectedFiles.length) * 100);
+        updateProgress(i + 1, selectedFiles.length, percent);
+
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+
+          const ifds = UTIF.decode(arrayBuffer);
+          if (!ifds || ifds.length === 0) throw new Error("Format invalide");
+
+          const firstPage = ifds[0];
+          UTIF.decodeImage(arrayBuffer, firstPage);
+          const rgba = UTIF.toRGBA8(firstPage);
+
+          const canvas = document.createElement('canvas');
+          canvas.width = firstPage.width;
+          canvas.height = firstPage.height;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+          const imageData = new ImageData(new Uint8ClampedArray(rgba), canvas.width, canvas.height);
+          ctx.putImageData(imageData, 0, 0);
+
+          const blob = await canvasToBlobAsync(canvas, targetFormat, targetQuality);
+
+          if (blob) {
+            const baseName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+            const newFileName = `${baseName}.${ext}`;
+            zipArchive.file(newFileName, blob);
+
+            addThumbnailToGrid(blob, newFileName);
+            successCountNum++;
+          }
+
+          // Pause pour ne pas geler l'interface du navigateur
+          await new Promise(r => setTimeout(r, 40));
+
+        } catch (error) {
+          console.error(`Erreur sur ${file.name}:`, error);
+          errorsCount++;
+        }
+      }
+
+      updateProgress(selectedFiles.length, selectedFiles.length, 100);
+      convertIcon.setAttribute('data-lucide', 'loader');
+      lucide.createIcons();
+      convertText.textContent = "Création du fichier ZIP...";
+
+      try {
+        const zipBlob = await zipArchive.generateAsync({ type: "blob" });
+        const zipUrl = URL.createObjectURL(zipBlob);
+
+        downloadBtn.href = zipUrl;
+        downloadBtn.download = `TIFF_Convertis_${Date.now()}.zip`;
+
+        successCount.textContent = `${successCountNum} image${successCountNum > 1 ? 's' : ''} convertie${successCountNum > 1 ? 's' : ''} avec succès`;
+        if (errorsCount > 0) {
+          showError(`${errorsCount} fichier(s) n'ont pas pu être traités (format corrompu ou non supporté).`);
+        }
+
+        resultPanel.classList.remove('hidden');
+        resultPanel.classList.add('flex');
+
+        // Focus sur le bouton de téléchargement pour l'accessibilité
+        setTimeout(() => downloadBtn.focus(), 100);
+        resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      } catch (zipError) {
+        console.error(zipError);
+        showError("Erreur critique lors de la création de l'archive ZIP.");
+      } finally {
+        setProcessingState(false);
+      }
+    });
+
+    function updateProgress(current, total, percent) {
+      progressText.textContent = `Traitement des images : ${current} / ${total}`;
+      progressPercent.textContent = `${percent}%`;
+      progressBar.style.width = `${percent}%`;
+      progressBar.setAttribute('aria-valuenow', percent);
+    }
+
+    function addThumbnailToGrid(blob, filename) {
+      const url = URL.createObjectURL(blob);
+
+      const div = document.createElement('div');
+      div.className = 'relative group aspect-square rounded-lg overflow-hidden bg-slate-100 border border-slate-200 checkerboard shadow-sm';
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = `Aperçu de ${filename}`;
+      img.className = 'w-full h-full object-contain p-2';
+      img.loading = 'lazy'; // SEO & Performance
+
+      const tooltip = document.createElement('div');
+      tooltip.className = 'absolute bottom-0 left-0 right-0 bg-slate-900/80 backdrop-blur-sm text-white text-[11px] truncate px-2 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity font-medium';
+      tooltip.textContent = filename;
+
+      div.appendChild(img);
+      div.appendChild(tooltip);
+      previewGrid.appendChild(div);
+    }
+
+    function setProcessingState(isProcessing) {
+      if (isProcessing) {
+        convertBtn.disabled = true;
+        convertIcon.classList.add('animate-spin');
+        convertIcon.setAttribute('data-lucide', 'loader-2');
+        convertText.textContent = "Conversion en cours...";
+        lucide.createIcons();
+      } else {
+        convertBtn.disabled = false;
+        convertIcon.classList.remove('animate-spin');
+        convertIcon.setAttribute('data-lucide', 'play');
+        convertText.textContent = "Démarrer la conversion";
+        lucide.createIcons();
+        progressContainer.classList.add('hidden');
+        progressBar.style.width = "0%";
+        progressBar.setAttribute('aria-valuenow', '0');
+      }
+    }
+
+    resetBtn.addEventListener('click', resetUI);
+
+    function resetUI() {
+      selectedFiles = [];
+      zipArchive = null;
+      fileStatusContainer.classList.add('hidden');
+      optionsPanel.classList.add('opacity-50', 'pointer-events-none');
+      resultPanel.classList.add('hidden');
+      resultPanel.classList.remove('flex');
+      errorMessage.classList.add('hidden');
+      progressContainer.classList.add('hidden');
+      previewGrid.innerHTML = '';
+
+      // Remonter vers la zone de drop
+      dropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+</body>
+
+</html>
